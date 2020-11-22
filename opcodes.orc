@@ -54,15 +54,16 @@ ares gbuzz aamp, acps, inumh, ilowh, kmul, iftcos
  xout ares
  endop
 
- opcode "amethyst", a, kkkijj
-kamp, kcps, kdetune, ivx, iphs, iskipinit xin
+ opcode "amethyst", a, kkkijoo
+kamp, kcps, kdetune, ivx, iphs, ioct, iskipinit xin
 if iphs<0 then
      iphs random 0, 1
 endif
-kcps__ = kcps*semitone(kdetune*ivx)
-ares vco2 kamp, kcps, -iskipinit, 0, iphs
+ioct = int(ivx%ioct)
+kcps__ = kcps*semitone(kdetune)
+ares vco2 kamp, kcps__*(2^ioct), -iskipinit, 0, iphs
 if ivx>1 then 
-anext amethyst kamp, kcps, kdetune, ivx-1
+anext amethyst kamp, kcps__, kdetune, ivx-1
 endif
 ares += anext
  xout ares
