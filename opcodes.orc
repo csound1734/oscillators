@@ -295,5 +295,35 @@ aresd *= aenv
 xout aresd
  endop
  
+ opcode "topaz", a, kkPOP
+kpch, kdtn, knumsyn, kthresh, kminpts xin
+knumsyn limit knumsyn, 0, 1
+asaw amethyst 1, kpch, kdtn, 8
+fs1, fs2 pvsifd asaw, 8192, 1024, 0, db(-18)
+fsaw partials fs1,fs2, kthresh, kminpts, 13000/sr, 1023
+asaw resyn fsaw, 1, 2, knumsyn*1023,  1
+xout asaw
+ endop
  
+  opcode sodalite, a, kik
+kcps, inum, ktun xin
+idetune unirand 1
+kdetune = semitone(ktun*idetune)
+ares pluck 1, kcps*kdetune, i(kcps), 0, 3, .5
+if inum>1 then
+ares2 sodalite kcps, inum-1, ktun
+ares += ares2
+endif
+xout ares
+ endop
+
+ opcode anatase, a, kik
+kcps, inum, ktun xin
+ares sodalite kcps, inum, ktun
+asig tonex ares, kcps*5, 4
+asig nreverb asig, 3.0, 0.02
+xout asig
+ endop
+
+
  
