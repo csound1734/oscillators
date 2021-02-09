@@ -326,4 +326,25 @@ xout asig
  endop
 
 
+ opcode mica1, a, aapp
+asig, afcf, icount, imul xin
+aalp zdf_1pole asig, afcf, 2   ;ALLPASS
+aalp zdf_1pole aalp, afcf, 2   ;ALLPASS
+if icount>1 then     ;ITERATE IN SERIES
+ aalp myPhaser aalp, afcf*imul, icount-1
+endif
+xout aalp  ;FOR PHASER: asig-aalp (dry minus wet)
+ endop
+
+ opcode mica2, a, aaapp
+asig, afcf, ares, icount, imul xin
+aalp zdf_2pole asig, afcf, ares, 5   ;ALLPASS
+aalp zdf_2pole aalp, afcf, ares, 5   ;ALLPASS
+if icount>1 then     ;ITERATE IN SERIES
+ aalp myPhaser aalp, afcf*imul, icount-1
+endif
+xout aalp  ;FOR PHASER: asig-aalp (dry minus wet)
+ endop
+
+
  
